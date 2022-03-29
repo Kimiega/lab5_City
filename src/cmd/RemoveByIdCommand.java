@@ -1,15 +1,12 @@
 package cmd;
 
+import client.Environment;
 import collection.CollectionManager;
 import ioManager.IOManager;
 
 import java.util.HashMap;
 
-public class RemoveByIdCommand extends Command {
-
-    private RemoveByIdCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class RemoveByIdCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +20,20 @@ public class RemoveByIdCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        int id = 0;
+        if (args.length>1)
+            try{
+                id = Integer.parseInt(args[1]);
+            }
+            catch (Exception ex){
+                env.getIOManager().writeln("Wrong arg");
+                return;
+            }
+        env.getCollectionManager().removeById(id);
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new RemoveByIdCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new RemoveByIdCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

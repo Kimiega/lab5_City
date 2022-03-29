@@ -1,15 +1,11 @@
 package cmd;
 
-import collection.CollectionManager;
-import ioManager.IOManager;
+import client.Environment;
 
 import java.util.HashMap;
 
-public class ExitCommand extends Command {
+public class ExitCommand implements ICommand {
 
-    private ExitCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
 
     @Override
     public String getName() {
@@ -23,10 +19,12 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
+    public void execute(Environment env, String[] args) {
+        env.getIOManager().writeln("Finish of working! Thanks for using!");
+        env.turnOff();
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new ExitCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ExitCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

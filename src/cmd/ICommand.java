@@ -1,12 +1,9 @@
 package cmd;
 
-import collection.CollectionManager;
-import ioManager.IOManager;
-
-import java.util.HashMap;
+import client.Environment;
 
 public interface ICommand {
     String getName();
     String getDescribe();
-    void execute(IOManager ioManager);
+    void execute(Environment env, String[] args);
 }

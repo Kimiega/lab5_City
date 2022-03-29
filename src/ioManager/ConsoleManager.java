@@ -1,6 +1,4 @@
 package ioManager;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Scanner;
 //import java.io.Console;
 
@@ -22,6 +20,11 @@ public class ConsoleManager implements IOManager{
     }
     @Override
     public void write(String s){
+        System.out.print(s);
+    }
+
+    @Override
+    public void writeln(String s) {
         System.out.println(s);
     }
 
@@ -31,8 +34,12 @@ public class ConsoleManager implements IOManager{
     }
 
     @Override
-    public void skipLine() {
-        if (scanner.hasNextLine());
-            scanner.nextLine();
+    public String[] readline() {
+        String s = scanner.nextLine();
+        String[] sArr = s.split("\\s");
+        if (sArr.length==1 && sArr[0]=="")
+            sArr = new String[0];
+        return sArr;
     }
+
 }

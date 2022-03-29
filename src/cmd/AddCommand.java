@@ -1,16 +1,13 @@
 package cmd;
 
+import client.Environment;
 import collection.City;
-import collection.CollectionManager;
-import ioManager.IOManager;
+import ioManager.RequestElement;
 
 import java.util.HashMap;
 
-public class AddCommand extends Command {
+public class AddCommand implements ICommand {
 
-    private AddCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
 
     @Override
     public String getName() {
@@ -23,14 +20,13 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        //TODO request to get an object
-        City o;
-        super.collectionManager.add(o);
+    public void execute(Environment env, String[] args) {
+        City o = RequestElement.readElement(env.getIOManager());
+        env.getCollectionManager().add(o);
     }
 
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new AddCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new AddCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

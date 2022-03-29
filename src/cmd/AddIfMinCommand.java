@@ -1,15 +1,14 @@
 package cmd;
 
+import client.Environment;
+import collection.City;
 import collection.CollectionManager;
 import ioManager.IOManager;
+import ioManager.RequestElement;
 
 import java.util.HashMap;
 
-public class AddIfMinCommand extends Command {
-
-    private AddIfMinCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class AddIfMinCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,12 +22,13 @@ public class AddIfMinCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        City o = RequestElement.readElement(env.getIOManager());
+        env.getCollectionManager().addIfMin(o);
     }
 
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new AddIfMinCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new AddIfMinCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

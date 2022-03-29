@@ -1,15 +1,12 @@
 package cmd;
 
+import client.Environment;
 import collection.CollectionManager;
 import ioManager.IOManager;
 
 import java.util.HashMap;
 
-public class RemoveAllByTimezoneCommand extends Command {
-
-    private RemoveAllByTimezoneCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class RemoveAllByTimezoneCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +20,25 @@ public class RemoveAllByTimezoneCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        int timezone = -13;
+        if (args.length>1)
+            try{
+                timezone = Integer.parseInt(args[1]);
+            }
+        catch (Exception ex){
+                env.getIOManager().writeln("Wrong arg");
+                return;
+        }
+        if (timezone>13 || timezone<-13)
+        {
+            env.getIOManager().writeln("Wrong arg");
+            return;
+        }
+        env.getCollectionManager().removeAllByTimezone(timezone);
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new RemoveAllByTimezoneCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new RemoveAllByTimezoneCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

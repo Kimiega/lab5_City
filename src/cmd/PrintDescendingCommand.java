@@ -1,15 +1,12 @@
 package cmd;
 
+import client.Environment;
 import collection.CollectionManager;
 import ioManager.IOManager;
 
 import java.util.HashMap;
 
-public class PrintDescendingCommand extends Command {
-
-    private PrintDescendingCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class PrintDescendingCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +20,11 @@ public class PrintDescendingCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        env.getCollectionManager().printDescending();
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new PrintDescendingCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new PrintDescendingCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

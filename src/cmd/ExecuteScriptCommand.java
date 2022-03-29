@@ -1,15 +1,10 @@
 package cmd;
 
-import collection.CollectionManager;
-import ioManager.IOManager;
+import client.Environment;
 
 import java.util.HashMap;
 
-public class ExecuteScriptCommand extends Command {
-
-    private ExecuteScriptCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class ExecuteScriptCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,12 +18,21 @@ public class ExecuteScriptCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        String path = null;
+        if (args.length==1){
+            env.getIOManager().writeln("Введите путь к файлу");
+            path = env.getIOManager().read();
+            }
+        while (path==null || path==""){
+            env.getIOManager().writeln("Путь не может быть пустым");
+            env.getIOManager().read();
+        }
+
     }
 
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new ExecuteScriptCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ExecuteScriptCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

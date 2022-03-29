@@ -1,15 +1,14 @@
 package cmd;
 
+import client.Environment;
+import collection.City;
 import collection.CollectionManager;
 import ioManager.IOManager;
+import ioManager.RequestElement;
 
 import java.util.HashMap;
 
-public class RemoveGreaterCommand extends Command {
-
-    private RemoveGreaterCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class RemoveGreaterCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +22,12 @@ public class RemoveGreaterCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        City o = RequestElement.readElement(env.getIOManager());
+        env.getCollectionManager().removeGreater(o);
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new RemoveGreaterCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new RemoveGreaterCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

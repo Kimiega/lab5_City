@@ -1,6 +1,8 @@
 package main;
 import client.Client;
+import client.Environment;
 import cmd.*;
+import collection.Climate;
 import collection.CollectionManager;
 import ioManager.ConsoleManager;
 import ioManager.IOManager;
@@ -28,28 +30,33 @@ public class Main{
         CollectionManager myCollection = new CollectionManager(cons);
         HashMap<String, ICommand> commandMap = new HashMap<String, ICommand>();
 
-        AddCommand.register(myCollection,commandMap);
-        AddIfMaxCommand.register(myCollection,commandMap);
-        AddIfMinCommand.register(myCollection,commandMap);
-        ClearCommand.register(myCollection,commandMap);
-        ExecuteScriptCommand.register(myCollection,commandMap);
-        ExitCommand.register(myCollection,commandMap);
-        HelpCommand.register(myCollection,commandMap);
-        InfoCommand.register(myCollection,commandMap);
-        PrintAscendingCommand.register(myCollection,commandMap);
-        PrintDescendingCommand.register(myCollection,commandMap);
-        RemoveAllByTimezoneCommand.register(myCollection,commandMap);
-        RemoveByIdCommand.register(myCollection,commandMap);
-        RemoveGreaterCommand.register(myCollection,commandMap);
-        SaveCommand.register(myCollection,commandMap);
-        ShowCommand.register(myCollection,commandMap);
-        UpdateIdCommand.register(myCollection,commandMap);
+        AddCommand.register(commandMap);
+        AddIfMaxCommand.register(commandMap);
+        AddIfMinCommand.register(commandMap);
+        ClearCommand.register(commandMap);
+        ExecuteScriptCommand.register(commandMap);
+        ExitCommand.register(commandMap);
+        HelpCommand.register(commandMap);
+        InfoCommand.register(commandMap);
+        PrintAscendingCommand.register(commandMap);
+        PrintDescendingCommand.register(commandMap);
+        RemoveAllByTimezoneCommand.register(commandMap);
+        RemoveByIdCommand.register(commandMap);
+        RemoveGreaterCommand.register(commandMap);
+        SaveCommand.register(commandMap);
+        ShowCommand.register(commandMap);
+        UpdateIdCommand.register(commandMap);
 
-        Client client = new Client(
-                cons,
-                commandMap
-        );
-        client.init();
+        Environment env = new Environment(myCollection,commandMap, cons);
+
+        Client client = new Client(env);
+        //client.init();
+        String[] s = env.getIOManager().readline();
+        System.out.println(s.length);
+        for (String s1 : s) {
+            System.out.println("|"+s1+"|");
+        }
+        System.out.println(Climate.OCEANIC.name());
     }
 }
 

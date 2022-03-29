@@ -1,15 +1,14 @@
 package cmd;
 
+import client.Environment;
+import collection.City;
 import collection.CollectionManager;
 import ioManager.IOManager;
+import ioManager.RequestElement;
 
 import java.util.HashMap;
 
-public class UpdateIdCommand extends Command {
-
-    private UpdateIdCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class UpdateIdCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +22,21 @@ public class UpdateIdCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        int id = 0;
+        if (args.length>1)
+            try{
+                id = Integer.parseInt(args[1]);
+            }
+            catch (Exception ex){
+                env.getIOManager().writeln("Wrong arg");
+                return;
+            }
+        City o = RequestElement.readElement(env.getIOManager());
+        env.getCollectionManager().updateById(id,o);
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new UpdateIdCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new UpdateIdCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }

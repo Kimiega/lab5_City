@@ -1,15 +1,12 @@
 package cmd;
 
+import client.Environment;
 import collection.CollectionManager;
 import ioManager.IOManager;
 
 import java.util.HashMap;
 
-public class ShowCommand extends Command {
-
-    private ShowCommand(CollectionManager collectionManager) {
-        super(collectionManager);
-    }
+public class ShowCommand implements ICommand {
 
     @Override
     public String getName() {
@@ -23,11 +20,11 @@ public class ShowCommand extends Command {
     }
 
     @Override
-    public void execute(IOManager ioManager) {
-        System.out.println("help command");
+    public void execute(Environment env, String[] args) {
+        env.getCollectionManager().show();
     }
-    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
-        ICommand cmd = new ShowCommand(collectionManager);
+    public static void register(HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ShowCommand();
         commandMap.put(cmd.getName(), cmd);
     }
 }
