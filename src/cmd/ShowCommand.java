@@ -1,8 +1,15 @@
 package cmd;
 
 import collection.CollectionManager;
+import ioManager.IOManager;
 
-public class ShowCommand implements Command{
+import java.util.HashMap;
+
+public class ShowCommand extends Command {
+
+    private ShowCommand(CollectionManager collectionManager) {
+        super(collectionManager);
+    }
 
     @Override
     public String getName() {
@@ -16,7 +23,11 @@ public class ShowCommand implements Command{
     }
 
     @Override
-    public void execute(CollectionManager collection) {
+    public void execute(IOManager ioManager) {
         System.out.println("help command");
+    }
+    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ShowCommand(collectionManager);
+        commandMap.put(cmd.getName(), cmd);
     }
 }

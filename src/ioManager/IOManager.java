@@ -1,14 +1,10 @@
 package ioManager;
 
-public abstract class IOManager implements IReadable,IWritable{
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-    @Override
-    public String read() {
-        return "";
-    }
-
-    @Override
-    public void write(String s) {
-
-    }
+public interface IOManager{
+    String read() throws IOException;
+    void write(String s);
+    void skipLine() throws IOException;
 }

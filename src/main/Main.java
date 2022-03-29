@@ -2,6 +2,10 @@ package main;
 import client.Client;
 import cmd.*;
 import collection.CollectionManager;
+import ioManager.ConsoleManager;
+import ioManager.IOManager;
+
+import java.util.HashMap;
 
 public class Main{
 
@@ -20,25 +24,30 @@ public class Main{
                }
             }
         }*/
-        CollectionManager myCollection = new CollectionManager();
+        IOManager cons = ConsoleManager.getInstance();
+        CollectionManager myCollection = new CollectionManager(cons);
+        HashMap<String, ICommand> commandMap = new HashMap<String, ICommand>();
+
+        AddCommand.register(myCollection,commandMap);
+        AddIfMaxCommand.register(myCollection,commandMap);
+        AddIfMinCommand.register(myCollection,commandMap);
+        ClearCommand.register(myCollection,commandMap);
+        ExecuteScriptCommand.register(myCollection,commandMap);
+        ExitCommand.register(myCollection,commandMap);
+        HelpCommand.register(myCollection,commandMap);
+        InfoCommand.register(myCollection,commandMap);
+        PrintAscendingCommand.register(myCollection,commandMap);
+        PrintDescendingCommand.register(myCollection,commandMap);
+        RemoveAllByTimezoneCommand.register(myCollection,commandMap);
+        RemoveByIdCommand.register(myCollection,commandMap);
+        RemoveGreaterCommand.register(myCollection,commandMap);
+        SaveCommand.register(myCollection,commandMap);
+        ShowCommand.register(myCollection,commandMap);
+        UpdateIdCommand.register(myCollection,commandMap);
+
         Client client = new Client(
-                myCollection,
-                new AddCommand(),
-                new AddIfMinCommand(),
-                new AddIfMaxCommand(),
-                new ClearCommand(),
-                new ExecuteScriptCommand(),
-                new ExitCommand(),
-                new HelpCommand(),
-                new InfoCommand(),
-                new PrintAscendingCommand(),
-                new PrintDescendingCommand(),
-                new RemoveAllByTimezoneCommand(),
-                new RemoveByIdCommand(),
-                new RemoveGreaterCommand(),
-                new SaveCommand(),
-                new ShowCommand(),
-                new UpdateIdCommand()
+                cons,
+                commandMap
         );
         client.init();
     }

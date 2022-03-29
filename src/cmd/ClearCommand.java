@@ -1,8 +1,15 @@
 package cmd;
 
 import collection.CollectionManager;
+import ioManager.IOManager;
 
-public class ClearCommand implements Command{
+import java.util.HashMap;
+
+public class ClearCommand extends Command {
+
+    private ClearCommand(CollectionManager collectionManager) {
+        super(collectionManager);
+    }
 
     @Override
     public String getName() {
@@ -16,7 +23,12 @@ public class ClearCommand implements Command{
     }
 
     @Override
-    public void execute(CollectionManager collection) {
+    public void execute(IOManager ioManager) {
 
+    }
+
+    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ClearCommand(collectionManager);
+        commandMap.put(cmd.getName(), cmd);
     }
 }

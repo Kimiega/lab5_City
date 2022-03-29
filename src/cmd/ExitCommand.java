@@ -1,8 +1,15 @@
 package cmd;
 
 import collection.CollectionManager;
+import ioManager.IOManager;
 
-public class ExitCommand implements Command{
+import java.util.HashMap;
+
+public class ExitCommand extends Command {
+
+    private ExitCommand(CollectionManager collectionManager) {
+        super(collectionManager);
+    }
 
     @Override
     public String getName() {
@@ -16,6 +23,10 @@ public class ExitCommand implements Command{
     }
 
     @Override
-    public void execute(CollectionManager collection) {
+    public void execute(IOManager ioManager) {
+    }
+    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new ExitCommand(collectionManager);
+        commandMap.put(cmd.getName(), cmd);
     }
 }

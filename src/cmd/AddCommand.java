@@ -2,8 +2,15 @@ package cmd;
 
 import collection.City;
 import collection.CollectionManager;
+import ioManager.IOManager;
 
-public class AddCommand implements Command{
+import java.util.HashMap;
+
+public class AddCommand extends Command {
+
+    private AddCommand(CollectionManager collectionManager) {
+        super(collectionManager);
+    }
 
     @Override
     public String getName() {
@@ -16,9 +23,14 @@ public class AddCommand implements Command{
     }
 
     @Override
-    public void execute(CollectionManager collection) {
+    public void execute(IOManager ioManager) {
         //TODO request to get an object
         City o;
-        collection.add(o);
+        super.collectionManager.add(o);
+    }
+
+    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new AddCommand(collectionManager);
+        commandMap.put(cmd.getName(), cmd);
     }
 }

@@ -4,7 +4,7 @@ import java.io.OutputStream;
 import java.util.Scanner;
 //import java.io.Console;
 
-public class ConsoleManager extends IOManager{
+public class ConsoleManager implements IOManager{
     //private Console cons;
     private Scanner scanner;
     private static ConsoleManager instance;
@@ -29,16 +29,10 @@ public class ConsoleManager extends IOManager{
     public String read() {
         return scanner.next();
     }
-    public String read(String message) {
-        System.out.println(message);
-        return scanner.next();
-    }
-    public String[] read(String message,int n) {
-        System.out.println(message);
-        String[] r = new String[n];
-        for (int i = 0; i < n; i++) {
-            r[i]= scanner.next();
-        }
-        return r;
+
+    @Override
+    public void skipLine() {
+        if (scanner.hasNextLine());
+            scanner.nextLine();
     }
 }

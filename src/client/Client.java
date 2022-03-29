@@ -1,36 +1,35 @@
 package client;
 
 import cmd.*;
-import collection.CollectionManager;
-import ioManager.ConsoleManager;
+import ioManager.IOManager;
 
-import java.text.CollationElementIterator;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Client {
     //private boolean isGui;
     //private String path;
-    private HashMap<String,Command> commandMap;
-    private ConsoleManager cons;
-    private CollectionManager collection;
+    private HashMap<String, ICommand> commandMap;
+    private IOManager ioManager;
     private boolean isRunning;
-    public Client(CollectionManager collection, Command... cmds){
-        this.collection = collection;
-        commandMap = new HashMap<String,Command>();
-        for (Command cmd : cmds) {
-            commandMap.put(cmd.getName(),cmd);
-        }
-        cons = ConsoleManager.getInstance();
+    public Client(IOManager ioManager, HashMap<String, ICommand> commandMap){
+        this.commandMap = commandMap;
+        this.ioManager = ioManager;
         isRunning = true;
     }
     public void init() {
         while (isRunning) {
-            String s = cons.read();
-
+            String s = "";
+            try {
+                s = ioManager.read();//TODO own ex
+            }
+            catch (IOException ex){
+                s  = "";
+            }
             switch (s) {
                 case "help":
-                    for (Command cmd : commandMap.values()) {
-                        cons.write(cmd.getDescribe());
+                    for (ICommand cmd : commandMap.values()) {
+                        ioManager.write(cmd.getDescribe());
                     }
                     break;
                 case "exit":
@@ -38,10 +37,10 @@ public class Client {
                     break;
                 default:
                     if (commandMap.containsKey(s)) {
-                        commandMap.get(s).execute(collection);
+                        commandMap.get(s).execute(ioManager);
                     }
                     else {
-                        cons.write("Команда не найдена");
+                        ioManager.write("Команда не найдена");
                     }
             }
         }

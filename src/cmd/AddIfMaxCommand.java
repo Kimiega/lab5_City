@@ -1,8 +1,15 @@
 package cmd;
 
 import collection.CollectionManager;
+import ioManager.IOManager;
 
-public class AddIfMaxCommand implements Command{
+import java.util.HashMap;
+
+public class AddIfMaxCommand extends Command {
+
+    private AddIfMaxCommand(CollectionManager collectionManager) {
+        super(collectionManager);
+    }
 
     @Override
     public String getName() {
@@ -15,7 +22,12 @@ public class AddIfMaxCommand implements Command{
     }
 
     @Override
-    public void execute(CollectionManager collection) {
+    public void execute(IOManager ioManager) {
         System.out.println("help command");
+    }
+
+    public static void register(CollectionManager collectionManager, HashMap<String, ICommand> commandMap) {
+        ICommand cmd = new AddIfMaxCommand(collectionManager);
+        commandMap.put(cmd.getName(), cmd);
     }
 }

@@ -1,21 +1,19 @@
 package collection;
 import ioManager.ConsoleManager;
+import ioManager.IOManager;
 
 import java.util.Date;
 import java.util.TreeSet;
-import java.lang.NullPointerException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CollectionManager {
     private TreeSet<City> cityCollection;
     private Date initializationDate;
-    private ConsoleManager cons;
+    private IOManager ioManager;
 
-    public CollectionManager(){
+    public CollectionManager(IOManager ioManager){
         cityCollection = new TreeSet<City>(new CustomComp());
         initializationDate = new java.util.Date();
-        cons = ConsoleManager.getInstance();
+        this.ioManager = ioManager;
     }
     public void add(City o) {
         cityCollection.add(o);
@@ -45,18 +43,18 @@ public class CollectionManager {
         //TODO
     }
     public void info(){
-        cons.write("Type: "+cityCollection.getClass().toString());
-        cons.write("Date of initialization: "+initializationDate.toString());
-        cons.write("Amount of elements: "+cityCollection.size());
+        ioManager.write("Type: "+cityCollection.getClass().toString());
+        ioManager.write("Date of initialization: "+initializationDate.toString());
+        ioManager.write("Amount of elements: "+cityCollection.size());
     }
     public void printAscending(){
         for (City city : cityCollection) {
-            cons.write(city.toString());
+            ioManager.write(city.toString());
         }
     }
     public void printDescending(){
         for (City city : cityCollection.descendingSet()) {
-            cons.write(city.toString());
+            ioManager.write(city.toString());
         }
     }
     public void removeAllByTimezone(int timezone){
@@ -83,7 +81,7 @@ public class CollectionManager {
     }
     public void show(){
         for (City city : cityCollection) {
-            cons.write(city.toString());
+            ioManager.write(city.toString());
         }
     }
     public void updateById(int id, City o){
