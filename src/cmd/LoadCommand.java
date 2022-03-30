@@ -8,7 +8,7 @@ public class LoadCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "save";
+        return "load";
     }
 
     @Override
