@@ -7,6 +7,8 @@ import collection.CollectionManager;
 import ioManager.ConsoleManager;
 import ioManager.IOManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Main{
@@ -34,7 +36,6 @@ public class Main{
         AddIfMaxCommand.register(commandMap);
         AddIfMinCommand.register(commandMap);
         ClearCommand.register(commandMap);
-        ExecuteScriptCommand.register(commandMap);
         ExitCommand.register(commandMap);
         HelpCommand.register(commandMap);
         InfoCommand.register(commandMap);
@@ -47,10 +48,17 @@ public class Main{
         ShowCommand.register(commandMap);
         UpdateIdCommand.register(commandMap);
         LoadCommand.register(commandMap);
+        File file = new File("collection.json");
+        boolean result;
+        try{
+            result = file.createNewFile();
+        }
+        catch(IOException ex)
+        {
+            ex.printStackTrace();
+        }
         myCollection.load("collection.json");
-
         Environment env = new Environment(myCollection,commandMap, cons);
-
         Client client = new Client(env);
         client.init();
 

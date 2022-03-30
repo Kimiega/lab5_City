@@ -199,31 +199,30 @@ public class RequestElement {
         Climate climate = null;
         ioManager.write("Введите климат: ");
         s = ioManager.readline();
-        if (s.length>0 && !s[0].equals(""))
+        if (s.length>0 && !s[0].equals("")) {
             if (Climate.HUMIDSUBTROPICAL.name().toString().equals(s[0]))
                 climate = Climate.HUMIDSUBTROPICAL;
             if (Climate.OCEANIC.name().toString().equals(s[0]))
                 climate = Climate.OCEANIC;
             if (Climate.TROPICAL_SAVANNA.name().toString().equals(s[0]))
                 climate = Climate.TROPICAL_SAVANNA;
-            boolean tempBool = (climate==null);
+            boolean tempBool = (climate == null);
             while (tempBool) {
-                    ioManager.writeln("Значение введено неверно");
-                    s = ioManager.readline();
-                    if (s[0].equals(""))
-                        tempBool = false;
-                    else
-                        if (Climate.HUMIDSUBTROPICAL.toString().equals(s[0]))
-                            climate = Climate.HUMIDSUBTROPICAL;
-                        if (Climate.OCEANIC.toString().equals(s[0]))
-                            climate = Climate.OCEANIC;
-                        if (Climate.TROPICAL_SAVANNA.toString().equals(s[0]))
-                            climate = Climate.TROPICAL_SAVANNA;
+                ioManager.writeln("Значение введено неверно");
+                s = ioManager.readline();
+                if (s[0].equals(""))
+                    tempBool = false;
+                else if (Climate.HUMIDSUBTROPICAL.toString().equals(s[0]))
+                    climate = Climate.HUMIDSUBTROPICAL;
+                if (Climate.OCEANIC.toString().equals(s[0]))
+                    climate = Climate.OCEANIC;
+                if (Climate.TROPICAL_SAVANNA.toString().equals(s[0]))
+                    climate = Climate.TROPICAL_SAVANNA;
 
-                }
-
+            }
+        }
         Human governor = null;
-        String gName = null;
+        /*String gName = null;
         Long gAge = null;
         String gBirthday = null;
         ioManager.write("Введите имя мэра: ");
@@ -258,7 +257,7 @@ public class RequestElement {
             //TODO birthday
             governor = new Human(gName,gAge,11,11,2011);
         }
-
+*/
 
         return new City(name, new Coordinates(x,y),area,population,metersAboveSeaLevel,timezone,agglomeration,climate,governor);
     }
