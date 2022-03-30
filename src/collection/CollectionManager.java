@@ -1,6 +1,8 @@
 package collection;
 import ioManager.ConsoleManager;
+import ioManager.IOFileManager;
 import ioManager.IOManager;
+import ioManager.JsonConvertor;
 
 import java.util.Date;
 import java.util.TreeSet;
@@ -49,12 +51,12 @@ public class CollectionManager {
     }
     public void printAscending(){
         for (City city : cityCollection) {
-            ioManager.write(city.toString());
+            ioManager.writeln(city.toString());
         }
     }
     public void printDescending(){
         for (City city : cityCollection.descendingSet()) {
-            ioManager.write(city.toString());
+            ioManager.writeln(city.toString());
         }
     }
     public void removeAllByTimezone(int timezone){
@@ -77,11 +79,12 @@ public class CollectionManager {
 //        cityCollection = new TreeSet<>(cityCollection.stream().filter((p) -> o.compareTo(p)<0).collect(Collectors.toList()));
     }
     public void save(){
-        //TODO save to file
+        IOFileManager ioFileManager = new IOFileManager("collection.json");
+        ioFileManager.write(JsonConvertor.toJson(cityCollection));
     }
     public void show(){
         for (City city : cityCollection) {
-            ioManager.write(city.toString());
+            ioManager.writeln(city.toString());
         }
     }
     public void updateById(int id, City o){
@@ -90,5 +93,9 @@ public class CollectionManager {
                 city = o;
             }
         }
+    }
+    public void load(String path){
+        IOFileManager fileManager = new IOFileManager("collection.json");
+        cityCollection = JsonConvertor.fromJson(fileManager.readAll());
     }
 }

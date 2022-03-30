@@ -37,7 +37,7 @@ public class ConsoleManager implements IOManager{
     public String[] readline() {
         String s = scanner.nextLine();
         String[] sArr = s.split("\\s");
-        if (sArr.length==1 && sArr[0]=="")
+        if (sArr.length==1 && sArr[0]=="\\s")
             sArr = new String[0];
         return sArr;
     }

@@ -4,7 +4,7 @@ import collection.City;
 import collection.Climate;
 import collection.Coordinates;
 import collection.Human;
-
+//TODO NORMALNYI READING
 public class RequestElement {
 
     static public City readElement(IOManager ioManager){
@@ -13,7 +13,7 @@ public class RequestElement {
         ioManager.write("Введите название города: ");
         String[] s = ioManager.readline();
         name = s[0];
-        while (name == null || name == "")
+        while (name == null || name.equals(""))
         {
             ioManager.writeln("Название не может быть пустым");
             s = ioManager.readline();
@@ -121,6 +121,7 @@ public class RequestElement {
         }
 
         Float metersAboveSeaLevel = null;
+        boolean t = false;
         ioManager.write("Введите высоту над уровнем моря: ");
         s = ioManager.readline();
         if (s.length>0) {
@@ -128,8 +129,8 @@ public class RequestElement {
                 metersAboveSeaLevel = Float.parseFloat(s[0]);
             } catch (Exception ex) {
                 metersAboveSeaLevel = null;
+                t = true;
             }
-            boolean t = true;
             while (t) {
                 ioManager.writeln("Значение введено неверно");
                 s = ioManager.readline();
@@ -198,36 +199,37 @@ public class RequestElement {
         Climate climate = null;
         ioManager.write("Введите климат: ");
         s = ioManager.readline();
-        if (s.length>0)
-            if (Climate.HUMIDSUBTROPICAL.name() == s[0])
+        if (s.length>0 && !s[0].equals(""))
+            if (Climate.HUMIDSUBTROPICAL.name().toString().equals(s[0]))
                 climate = Climate.HUMIDSUBTROPICAL;
-            else if (Climate.OCEANIC.name() == s[0])
+            if (Climate.OCEANIC.name().toString().equals(s[0]))
                 climate = Climate.OCEANIC;
-            else if (Climate.TROPICAL_SAVANNA.name() == s[0])
+            if (Climate.TROPICAL_SAVANNA.name().toString().equals(s[0]))
                 climate = Climate.TROPICAL_SAVANNA;
-            else while (true) {
+            boolean tempBool = (climate==null);
+            while (tempBool) {
                     ioManager.writeln("Значение введено неверно");
                     s = ioManager.readline();
-                    if (s.length == 0)
-                        break;
-                    else if (s.length > 0) {
-                        if (Climate.HUMIDSUBTROPICAL.toString() == s[0])
+                    if (s[0].equals(""))
+                        tempBool = false;
+                    else
+                        if (Climate.HUMIDSUBTROPICAL.toString().equals(s[0]))
                             climate = Climate.HUMIDSUBTROPICAL;
-                        else if (Climate.OCEANIC.toString() == s[0])
+                        if (Climate.OCEANIC.toString().equals(s[0]))
                             climate = Climate.OCEANIC;
-                        else if (Climate.TROPICAL_SAVANNA.toString() == s[0])
+                        if (Climate.TROPICAL_SAVANNA.toString().equals(s[0]))
                             climate = Climate.TROPICAL_SAVANNA;
-                    }
+
                 }
 
         Human governor = null;
         String gName = null;
         Long gAge = null;
         String gBirthday = null;
-        ioManager.write("Введите имя мера: ");
+        ioManager.write("Введите имя мэра: ");
         s = ioManager.readline();
-        if (s.length>0) {
-            name = s[0];
+        if (s.length>0 && !s[0].equals("")) {
+            gName = s[0];
 
             ioManager.write("Введите возраст: ");
             s = ioManager.readline();

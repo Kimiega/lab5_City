@@ -17,11 +17,14 @@ public class Human {
         if (o == null){
             return 1;
         }
-        int r = this.name.compareTo(o.name);
+        int r = 0;
+        if (this.name!=null)
+            r = this.name.compareTo(o.name);
         if (r==0){
-            r = this.age.compareTo(o.age);
-            if (r==0)
+            if (this.birthday!=null)
                 r = this.birthday.compareTo(o.birthday);
+            else if (o.birthday!=null)
+                r = -o.birthday.compareTo(this.birthday);
         }
         return r;
     }

@@ -62,10 +62,18 @@ public class City implements Comparable<City> {
                             if (r==0){
                                 r = this.agglomeration.compareTo(o.agglomeration);
                                 if (r==0){
-                                    r = this.climate.compareTo(o.climate);
+                                    if (climate!=null)
+                                        r = this.climate.compareTo(o.climate);
+                                    else
+                                        if (o.climate!=null)
+                                            r = -o.climate.compareTo(this.climate);
                                     if (r==0)
                                     {
-                                        r = this.governor.compareTo(o.governor);
+                                        if (governor!=null)
+                                            r = this.governor.compareTo(o.governor);
+                                        else
+                                            if (o.governor!=null)
+                                                r = -o.governor.compareTo(this.governor);
                                     }
                                 }
                             }
@@ -79,7 +87,8 @@ public class City implements Comparable<City> {
 
     @Override
     public String toString() {
-        return "City{" +
+        String s = "";
+        s = "City{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinates=" + coordinates.toString() +
@@ -89,8 +98,12 @@ public class City implements Comparable<City> {
                 ", metersAboveSeaLevel=" + metersAboveSeaLevel +
                 ", timezone=" + timezone +
                 ", agglomeration=" + agglomeration +
-                ", climate=" + climate.toString() +
-                ", governor=" + governor.toString() +
+                ", climate=" + climate +
+                ", governor=";
+        if (governor==null)
+            s += "null" + '}';
+        else s+= governor.toString() +
                 '}';
+        return s;
     }
 }

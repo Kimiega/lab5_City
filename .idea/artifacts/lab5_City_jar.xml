@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lab5_City:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab5_City_jar</output-path>
+    <root id="archive" name="lab5_City.jar">
+      <element id="module-output" name="lab5_City" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gson-2.9.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
