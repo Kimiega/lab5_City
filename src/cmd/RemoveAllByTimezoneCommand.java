@@ -22,20 +22,21 @@ public class RemoveAllByTimezoneCommand implements ICommand {
     @Override
     public void execute(Environment env, String[] args) {
         int timezone = -13;
-        if (args.length>1)
-            try{
+        if (args.length>1) {
+            try {
                 timezone = Integer.parseInt(args[1]);
-            }
-        catch (Exception ex){
+            } catch (Exception ex) {
                 env.getIOManager().writeln("Wrong arg");
                 return;
+            }
+            if (timezone > 13 || timezone < -13) {
+                env.getIOManager().writeln("Wrong arg");
+                return;
+            }
+            env.getCollectionManager().removeAllByTimezone(timezone);
         }
-        if (timezone>13 || timezone<-13)
-        {
-            env.getIOManager().writeln("Wrong arg");
-            return;
-        }
-        env.getCollectionManager().removeAllByTimezone(timezone);
+        else
+            env.getIOManager().writeln("Arg is missing");
     }
     public static void register(HashMap<String, ICommand> commandMap) {
         ICommand cmd = new RemoveAllByTimezoneCommand();

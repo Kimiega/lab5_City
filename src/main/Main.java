@@ -50,13 +50,13 @@ public class Main{
         Environment env = new Environment(myCollection,commandMap, cons);
 
         Client client = new Client(env);
-        //client.init();
-        String[] s = env.getIOManager().readline();
-        System.out.println(s.length);
-        for (String s1 : s) {
-            System.out.println("|"+s1+"|");
-        }
-        System.out.println(Climate.OCEANIC.name());
+        client.init();
+//            String[] s = env.getIOManager().readline();
+//            System.out.println(s.length);
+//            for (String s1 : s) {
+//                System.out.println("|"+s1+"|");
+//            }
+//            System.out.println(Climate.OCEANIC.name());
     }
 }
 

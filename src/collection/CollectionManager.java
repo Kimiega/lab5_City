@@ -43,9 +43,9 @@ public class CollectionManager {
         //TODO
     }
     public void info(){
-        ioManager.write("Type: "+cityCollection.getClass().toString());
-        ioManager.write("Date of initialization: "+initializationDate.toString());
-        ioManager.write("Amount of elements: "+cityCollection.size());
+        ioManager.writeln("Type: "+cityCollection.getClass().toString());
+        ioManager.writeln("Date of initialization: "+initializationDate.toString());
+        ioManager.writeln("Amount of elements: "+cityCollection.size());
     }
     public void printAscending(){
         for (City city : cityCollection) {
