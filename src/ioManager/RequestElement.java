@@ -212,13 +212,17 @@ public class RequestElement {
                 s = ioManager.readline();
                 if (s[0].equals(""))
                     tempBool = false;
-                else if (Climate.HUMIDSUBTROPICAL.toString().equals(s[0]))
+                else if (Climate.HUMIDSUBTROPICAL.toString().equals(s[0])) {
                     climate = Climate.HUMIDSUBTROPICAL;
-                if (Climate.OCEANIC.toString().equals(s[0]))
+                    tempBool = false;
+                }
+                if (Climate.OCEANIC.toString().equals(s[0])) {
                     climate = Climate.OCEANIC;
+                    tempBool = false;
+                }
                 if (Climate.TROPICAL_SAVANNA.toString().equals(s[0]))
-                    climate = Climate.TROPICAL_SAVANNA;
-
+                { climate = Climate.TROPICAL_SAVANNA;
+                    tempBool = false;}
             }
         }
         Human governor = null;

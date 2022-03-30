@@ -5,6 +5,7 @@ import ioManager.IOManager;
 import ioManager.JsonConvertor;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 public class CollectionManager {
@@ -97,5 +98,11 @@ public class CollectionManager {
     public void load(String path){
         IOFileManager fileManager = new IOFileManager("collection.json");
         cityCollection = JsonConvertor.fromJson(fileManager.readAll());
+        int id=0;
+        for (City city : cityCollection) {
+            if (city.getId()>id)
+                id = city.getId();
+        }
+        cityCollection.last().setIdOrder(id);
     }
 }
