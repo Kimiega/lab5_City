@@ -17,18 +17,16 @@ import java.util.HashMap;
 //TODO javadoc
 //TODO fix IOFileManager
 //TODO make UML diagram
-//TODO exceptions
-//TODO fix Null if file is not found
 
 public class Main{
 
     public static void main(String[] args){
+        String path = "collection2.json";
         //start settings
         //console gui
         //offline online
         //path type
         // path
-        String path = "";
         /* for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (arg == "-p"){
@@ -58,17 +56,19 @@ public class Main{
         ShowCommand.register(commandMap);
         UpdateIdCommand.register(commandMap);
         LoadCommand.register(commandMap);
-        File file = new File("collection.json");
-        boolean result;
-        try{
-            result = file.createNewFile();
+        if (new File(path).isFile()){
+            myCollection.load(path);
         }
-        catch(IOException ex)
-        {
-            ex.printStackTrace();
+        else{
+            try {
+                new File(path).createNewFile();
+            }
+            catch (IOException ex){
+                ex.printStackTrace();
+                System.exit(1);
+            }
         }
-        myCollection.load("collection.json");
-        Environment env = new Environment(myCollection,commandMap, in, out);
+        Environment env = new Environment(myCollection,commandMap,path, in, out);
         Client client = new Client(env);
         client.init();
 

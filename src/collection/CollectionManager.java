@@ -20,22 +20,15 @@ public class CollectionManager {
         cityCollection.add(o);
     }
     public void addIfMax(City o){
-        //if (o==null){
-        //    throw(NullPointerException);
-       // }TODO
+
         if (o.compareTo(cityCollection.last())>0){
             cityCollection.add(o);
         }
-        //else TODO
     }
     public void addIfMin(City o){
-        //if (o==null){
-        //    throw(NullPointerException);
-        // }TODO
         if (o.compareTo(cityCollection.first())<0){
             cityCollection.add(o);
         }
-        //else TODO
     }
     public void clear(){
         cityCollection.clear();
@@ -64,7 +57,6 @@ public class CollectionManager {
                 cityCollection.remove(city);
             }
         }
-        //TODO check working
     }
     public void removeById(int id){
         for (City city : cityCollection) {
@@ -73,12 +65,9 @@ public class CollectionManager {
     }
     public void removeGreater(City o){
         cityCollection = (TreeSet<City>)cityCollection.headSet(o,true);
-//        while (cityCollection.last().compareTo(o)>0)
-//            cityCollection.remove(cityCollection.last());
-//        cityCollection = new TreeSet<>(cityCollection.stream().filter((p) -> o.compareTo(p)<0).collect(Collectors.toList()));
     }
-    public void save(){
-        IOFileManager ioFileManager = new IOFileManager("collection.json");
+    public void save(String path){
+        IOFileManager ioFileManager = new IOFileManager(path);
         ioFileManager.write(JsonConvertor.toJson(cityCollection));
     }
     public void show(){
@@ -94,7 +83,7 @@ public class CollectionManager {
         }
     }
     public void load(String path){
-        IOFileManager fileManager = new IOFileManager("collection.json");
+        IOFileManager fileManager = new IOFileManager(path);
         cityCollection = JsonConvertor.fromJson(fileManager.readAll());
         int id=0;
         for (City city : cityCollection) {

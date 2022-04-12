@@ -13,10 +13,12 @@ public class Environment {
     private HashMap<String, ICommand> commandMap;
     private IReadable in;
     private IWritable out;
+    private String path;
     private boolean isRunning;
-    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap, IReadable in, IWritable out){
+    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap,String path, IReadable in, IWritable out){
         this.collectionManager = collectionManager;
         this.commandMap = commandMap;
+        this.path = path;
         this.in = in;
         this.out = out;
         isRunning = true;
@@ -42,5 +44,9 @@ public class Environment {
     }
     public void turnOff(){
         isRunning = false;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

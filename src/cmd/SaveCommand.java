@@ -21,7 +21,7 @@ public class SaveCommand implements ICommand {
 
     @Override
     public void execute(Environment env, String[] args) {
-        env.getCollectionManager().save();
+        env.getCollectionManager().save(env.getPath());
     }
     public static void register( HashMap<String, ICommand> commandMap) {
         ICommand cmd = new SaveCommand();
