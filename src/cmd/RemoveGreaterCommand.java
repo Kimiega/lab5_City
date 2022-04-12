@@ -16,14 +16,15 @@ public class RemoveGreaterCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "remove_greater          | Удалить из коллекции все элементы, превышающие заданный";
     }
 
     @Override
     public void execute(Environment env, String[] args) {
-        City o = RequestElement.readElement(env.getIOManager());
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+        City o = reqEl.readElement();
         env.getCollectionManager().removeGreater(o);
     }
     public static void register(HashMap<String, ICommand> commandMap) {

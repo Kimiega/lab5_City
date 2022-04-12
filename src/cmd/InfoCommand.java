@@ -13,7 +13,7 @@ public class InfoCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "info                    | Вывести в стандартный поток вывода информацию о коллекции";
     }

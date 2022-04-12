@@ -4,6 +4,6 @@ import client.Environment;
 
 public interface ICommand {
     String getName();
-    String getDescribe();
+    String getDescription();
     void execute(Environment env, String[] args);
 }

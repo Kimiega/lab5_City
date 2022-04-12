@@ -16,7 +16,7 @@ public class UpdateIdCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "update_id               | Обновить значение элемента коллекции, id которого равен заданному";
     }
@@ -29,10 +29,11 @@ public class UpdateIdCommand implements ICommand {
                 id = Integer.parseInt(args[1]);
             }
             catch (Exception ex){
-                env.getIOManager().writeln("Wrong arg");
+                env.getOut().writeln("Wrong arg");
                 return;
             }
-        City o = RequestElement.readElement(env.getIOManager());
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+        City o = reqEl.readElement();
         env.getCollectionManager().updateById(id,o);
     }
     public static void register(HashMap<String, ICommand> commandMap) {

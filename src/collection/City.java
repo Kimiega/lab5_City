@@ -14,12 +14,12 @@ public class City implements Comparable<City> {
     private Climate climate; //Поле может быть null
     private Human governor; //Поле может быть null
 
-    public City (String name, Coordinates coordinates, int area, Long population, Float metersAboveSeaLevel,
+    public City (String name, Coordinates coordinates, Date creationDate, int area, Long population, Float metersAboveSeaLevel,
                  int timezone, Long agglomeration, Climate climate,Human governor) {
         this.id = ++idOrder;
         this.name = name;
         this.coordinates = coordinates;
-        creationDate = new java.util.Date();
+        this.creationDate = creationDate;
         this.area = area;
         this.population = population;
         this.metersAboveSeaLevel = metersAboveSeaLevel;
@@ -30,7 +30,7 @@ public class City implements Comparable<City> {
         //TODO is acceptable
     }
 
-    protected void setIdOrder(int idOrder) {
+    protected static void setIdOrder(int idOrder) {
         City.idOrder = idOrder;
     }
 
@@ -49,38 +49,29 @@ public class City implements Comparable<City> {
             return 1;
         }
         int r = this.name.compareTo(o.name);
-        if (r==0){
+        if (r==0)
            r = this.coordinates.compareTo(o.coordinates);
-           if (r==0) {
-                r = this.area-o.area;
-                if (r==0){
-                    r = this.population.compareTo(o.population);
-                    if (r==0){
-                        r = this.metersAboveSeaLevel.compareTo(o.metersAboveSeaLevel);
-                        if (r==0) {
-                            r = this.timezone-o.timezone;
-                            if (r==0){
-                                r = this.agglomeration.compareTo(o.agglomeration);
-                                if (r==0){
-                                    if (climate!=null)
-                                        r = this.climate.compareTo(o.climate);
-                                    else
-                                        if (o.climate!=null)
-                                            r = -o.climate.compareTo(this.climate);
-                                    if (r==0)
-                                    {
-                                        if (governor!=null)
-                                            r = this.governor.compareTo(o.governor);
-                                        else
-                                            if (o.governor!=null)
-                                                r = -o.governor.compareTo(this.governor);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-           }
+        if (r==0)
+            r = this.area-o.area;
+        if (r==0)
+            r = this.population.compareTo(o.population);
+        if (r==0)
+            r = this.metersAboveSeaLevel.compareTo(o.metersAboveSeaLevel);
+        if (r==0)
+            r = this.timezone-o.timezone;
+        if (r==0)
+            r = this.agglomeration.compareTo(o.agglomeration);
+        if (r==0) {
+            if (climate != null)
+                r = this.climate.compareTo(o.climate);
+            else if (o.climate != null)
+                r = -o.climate.compareTo(this.climate);
+        }
+        if (r==0) {
+            if (governor!=null)
+                r = this.governor.compareTo(o.governor);
+            else if (o.governor!=null)
+                r = -o.governor.compareTo(this.governor);
         }
         return r;
     }

@@ -14,7 +14,7 @@ public class RemoveByIdCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "remove_by_id            | Удалить элемент из коллекции по его id";
     }
@@ -26,13 +26,13 @@ public class RemoveByIdCommand implements ICommand {
             try {
                 id = Integer.parseInt(args[1]);
             } catch (Exception ex) {
-                env.getIOManager().writeln("Wrong arg");
+                env.getOut().writeln("Wrong arg");
                 return;
             }
             env.getCollectionManager().removeById(id);
         }
         else
-            env.getIOManager().writeln("Arg is missing");
+            env.getOut().writeln("Arg is missing");
     }
     public static void register(HashMap<String, ICommand> commandMap) {
         ICommand cmd = new RemoveByIdCommand();

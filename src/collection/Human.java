@@ -1,16 +1,19 @@
 package collection;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class Human {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Long age; //Значение поля должно быть больше 0
     private LocalDate birthday;
 
-    public Human(String name, Long Age, int day, int month, int year){
+    public Human(String name, Date birthday){
         this.name = name;
-        this.age = age;
-        this.birthday = LocalDate.of(year,month,day);
+        this.birthday = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        this.age = (long)Period.between(this.birthday,LocalDate.now()).getYears();
     }
 
     public int compareTo(Human o){
@@ -39,4 +42,3 @@ public class Human {
     }
 }
 
-//TODO

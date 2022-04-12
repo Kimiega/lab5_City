@@ -13,7 +13,7 @@ public class ClearCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "clear                   | Очистить коллекцию";
     }

@@ -14,7 +14,7 @@ public class PrintDescendingCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "print_descending        | Вывести элементы коллекции в порядке убывания";
     }

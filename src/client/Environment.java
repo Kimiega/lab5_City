@@ -3,18 +3,22 @@ package client;
 import cmd.ICommand;
 import collection.CollectionManager;
 import ioManager.IOManager;
+import ioManager.IReadable;
+import ioManager.IWritable;
 
 import java.util.HashMap;
 
 public class Environment {
     private CollectionManager collectionManager;
     private HashMap<String, ICommand> commandMap;
-    private IOManager ioManager;
+    private IReadable in;
+    private IWritable out;
     private boolean isRunning;
-    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap, IOManager ioManager){
+    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap, IReadable in, IWritable out){
         this.collectionManager = collectionManager;
         this.commandMap = commandMap;
-        this.ioManager = ioManager;
+        this.in = in;
+        this.out = out;
         isRunning = true;
     }
 
@@ -26,8 +30,12 @@ public class Environment {
         return commandMap;
     }
 
-    public IOManager getIOManager() {
-        return ioManager;
+    public IReadable getIn(){
+        return in;
+    }
+
+    public IWritable getOut(){
+        return out;
     }
     public boolean getIsRunning(){
         return isRunning;

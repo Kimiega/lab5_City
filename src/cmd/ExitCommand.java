@@ -13,14 +13,14 @@ public class ExitCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "exit                    | Завершить программу (без сохранения в файл)";
     }
 
     @Override
     public void execute(Environment env, String[] args) {
-        env.getIOManager().writeln("Finish of working! Thanks for using!");
+        env.getOut().writeln("Finish of working! Thanks for using!");
         env.turnOff();
     }
     public static void register(HashMap<String, ICommand> commandMap) {

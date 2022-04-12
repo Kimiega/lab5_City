@@ -12,7 +12,7 @@ public class ExecuteScriptCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "execute_script          | Считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.";
     }
@@ -21,12 +21,12 @@ public class ExecuteScriptCommand implements ICommand {
     public void execute(Environment env, String[] args) {
         String path = null;
         if (args.length==1){
-            env.getIOManager().writeln("Введите путь к файлу");
-            path = env.getIOManager().read();
+            env.getOut().writeln("Введите путь к файлу");
+            path = env.getIn().read();
             }
         while (path==null || path==""){
-            env.getIOManager().writeln("Путь не может быть пустым");
-            env.getIOManager().read();
+            env.getOut().writeln("Путь не может быть пустым");
+            env.getIn().read();
         }
 
     }

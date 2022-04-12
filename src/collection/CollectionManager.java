@@ -1,22 +1,20 @@
 package collection;
-import ioManager.ConsoleManager;
-import ioManager.IOFileManager;
-import ioManager.IOManager;
-import ioManager.JsonConvertor;
+import ioManager.*;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.TreeSet;
 
 public class CollectionManager {
     private TreeSet<City> cityCollection;
     private Date initializationDate;
-    private IOManager ioManager;
+    private IReadable in;
+    private IWritable out;
 
-    public CollectionManager(IOManager ioManager){
+    public CollectionManager(IReadable in, IWritable out){
         cityCollection = new TreeSet<City>(new CustomComp());
         initializationDate = new java.util.Date();
-        this.ioManager = ioManager;
+        this.in = in;
+        this.out = out;
     }
     public void add(City o) {
         cityCollection.add(o);
@@ -46,18 +44,18 @@ public class CollectionManager {
         //TODO
     }
     public void info(){
-        ioManager.writeln("Type: "+cityCollection.getClass().toString());
-        ioManager.writeln("Date of initialization: "+initializationDate.toString());
-        ioManager.writeln("Amount of elements: "+cityCollection.size());
+        out.writeln("Type: "+cityCollection.getClass().toString());
+        out.writeln("Date of initialization: "+initializationDate.toString());
+        out.writeln("Amount of elements: "+cityCollection.size());
     }
     public void printAscending(){
         for (City city : cityCollection) {
-            ioManager.writeln(city.toString());
+            out.writeln(city.toString());
         }
     }
     public void printDescending(){
         for (City city : cityCollection.descendingSet()) {
-            ioManager.writeln(city.toString());
+            out.writeln(city.toString());
         }
     }
     public void removeAllByTimezone(int timezone){
@@ -85,7 +83,7 @@ public class CollectionManager {
     }
     public void show(){
         for (City city : cityCollection) {
-            ioManager.writeln(city.toString());
+            out.writeln(city.toString());
         }
     }
     public void updateById(int id, City o){
@@ -103,6 +101,6 @@ public class CollectionManager {
             if (city.getId()>id)
                 id = city.getId();
         }
-        cityCollection.last().setIdOrder(id);
+        City.setIdOrder(id);
     }
 }

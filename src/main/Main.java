@@ -2,14 +2,23 @@ package main;
 import client.Client;
 import client.Environment;
 import cmd.*;
-import collection.Climate;
 import collection.CollectionManager;
 import ioManager.ConsoleManager;
 import ioManager.IOManager;
+import ioManager.IReadable;
+import ioManager.IWritable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+//TODO StreamAPI ?
+//TODO make execute_script command
+//TODO Unit tests
+//TODO javadoc
+//TODO fix IOFileManager
+//TODO make UML diagram
+//TODO exceptions
+//TODO fix Null if file is not found
 
 public class Main{
 
@@ -28,8 +37,9 @@ public class Main{
                }
             }
         }*/
-        IOManager cons = ConsoleManager.getInstance();
-        CollectionManager myCollection = new CollectionManager(cons);
+        IReadable in = ConsoleManager.getInstance();
+        IWritable out = ConsoleManager.getInstance();
+        CollectionManager myCollection = new CollectionManager(in,out);
         HashMap<String, ICommand> commandMap = new HashMap<String, ICommand>();
 
         AddCommand.register(commandMap);
@@ -58,22 +68,9 @@ public class Main{
             ex.printStackTrace();
         }
         myCollection.load("collection.json");
-        Environment env = new Environment(myCollection,commandMap, cons);
+        Environment env = new Environment(myCollection,commandMap, in, out);
         Client client = new Client(env);
         client.init();
 
-//            String[] s = env.getIOManager().readline();
-//            System.out.println(s.length);
-//            for (String s1 : s) {
-//                System.out.println("|"+s1+"|");
-//            }
-          // System.out.println(Climate.OCEANIC);
     }
 }
-
-//public class Main {
-//    public static void main(String[] args) throws IOException {
-//        String x = LocalFileManager.Read("D:\\hello.txt");
-//        System.out.println(x);
-//    }
-//}

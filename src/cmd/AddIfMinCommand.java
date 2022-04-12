@@ -16,14 +16,15 @@ public class AddIfMinCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "add_if_max              | Добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции";
     }
 
     @Override
     public void execute(Environment env, String[] args) {
-        City o = RequestElement.readElement(env.getIOManager());
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+        City o = reqEl.readElement();
         env.getCollectionManager().addIfMin(o);
     }
 

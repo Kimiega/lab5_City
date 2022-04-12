@@ -12,7 +12,7 @@ public class LoadCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "load                    | Загрузить коллекцию из файла";
     }

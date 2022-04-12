@@ -14,7 +14,7 @@ public class RemoveAllByTimezoneCommand implements ICommand {
     }
 
     @Override
-    public String getDescribe() {
+    public String getDescription() {
 
         return "remove_all_by_timezone  | Удалить из коллекции все элементы, значение поля timezone которого эквивалентно заданному";
     }
@@ -26,17 +26,17 @@ public class RemoveAllByTimezoneCommand implements ICommand {
             try {
                 timezone = Integer.parseInt(args[1]);
             } catch (Exception ex) {
-                env.getIOManager().writeln("Wrong arg");
+                env.getOut().writeln("Wrong arg");
                 return;
             }
             if (timezone > 13 || timezone < -13) {
-                env.getIOManager().writeln("Wrong arg");
+                env.getOut().writeln("Wrong arg");
                 return;
             }
             env.getCollectionManager().removeAllByTimezone(timezone);
         }
         else
-            env.getIOManager().writeln("Arg is missing");
+            env.getOut().writeln("Arg is missing");
     }
     public static void register(HashMap<String, ICommand> commandMap) {
         ICommand cmd = new RemoveAllByTimezoneCommand();

@@ -8,12 +8,12 @@ public class Client {
     }
     public void init() {
         while (env.getIsRunning()) {
-            String[] s = env.getIOManager().readline();
+            String[] s = env.getIn().readline();
             if (env.getCommandMap().containsKey(s[0])) {
                 env.getCommandMap().get(s[0]).execute(env, s);
             }
             else {
-                env.getIOManager().writeln("Command not found");
+                env.getOut().writeln("Command not found");
             }
         }
     }
