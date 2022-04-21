@@ -4,7 +4,6 @@ import client.Environment;
 import cmd.*;
 import collection.CollectionManager;
 import ioManager.ConsoleManager;
-import ioManager.IOManager;
 import ioManager.IReadable;
 import ioManager.IWritable;
 

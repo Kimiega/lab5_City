@@ -2,8 +2,6 @@ package cmd;
 
 import client.Environment;
 import collection.City;
-import collection.CollectionManager;
-import ioManager.IOManager;
 import ioManager.RequestElement;
 
 import java.util.HashMap;

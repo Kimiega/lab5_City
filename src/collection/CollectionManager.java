@@ -1,6 +1,7 @@
 package collection;
 import ioManager.*;
 
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.TreeSet;
 
@@ -83,8 +84,26 @@ public class CollectionManager {
         }
     }
     public void load(String path){
-        IOFileManager fileManager = new IOFileManager(path);
-        cityCollection = JsonConvertor.fromJson(fileManager.readAll());
+        IReadable fileReader;
+        try {
+            fileReader = new ReaderFile(path);
+        } catch (FileNotFoundException e) {
+            out.writeln("Файл коллекции не найден или недоступен");
+            return;
+        }
+        String collectionJson = "";
+        String sTemp;
+        while ((sTemp = fileReader.readline())!=null)
+            collectionJson+=sTemp;
+        try {
+            cityCollection = JsonConvertor.fromJson(collectionJson);
+        }
+        catch(Exception ex) {
+            out.writeln("Файл поврежден");
+            cityCollection = new TreeSet<City>(new CustomComp());
+            out.writeln("Cоздана пустая коллекция");
+            return;
+        }
         int id=0;
         for (City city : cityCollection) {
             if (city.getId()>id)

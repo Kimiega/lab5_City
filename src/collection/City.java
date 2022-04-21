@@ -1,6 +1,9 @@
 package collection;
+import java.io.Serializable;
 import java.util.Date;
-public class City implements Comparable<City> {
+public class City implements Comparable<City>, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private static int idOrder = 0;
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой

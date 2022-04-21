@@ -2,7 +2,6 @@ package client;
 
 import cmd.ICommand;
 import collection.CollectionManager;
-import ioManager.IOManager;
 import ioManager.IReadable;
 import ioManager.IWritable;
 

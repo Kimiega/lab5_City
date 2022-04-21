@@ -1,11 +1,14 @@
 package collection;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class Human {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Long age; //Значение поля должно быть больше 0
     private LocalDate birthday;

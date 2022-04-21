@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 //TODO
-public class IOFileManager implements IOManager{
+public class IOFileManager implements IReadable,IWritable{
     private String path;
     FileReader fr;
     BufferedOutputStream fw;
@@ -46,8 +46,24 @@ public class IOFileManager implements IOManager{
     }
 
     @Override
-    public String[] readline() {
-        return new String[0];
+    public String readline() {
+        return null;
+    }
+
+
+    @Override
+    public Integer readInt() {
+        return null;
+    }
+
+    @Override
+    public Float readFloat() {
+        return null;
+    }
+
+    @Override
+    public Long readLong() {
+        return null;
     }
 
     @Override

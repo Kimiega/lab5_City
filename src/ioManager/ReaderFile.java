@@ -1,31 +1,16 @@
 package ioManager;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-//import java.io.Console;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
-public class ConsoleManager implements IReadable,IWritable{
-    //private Console cons;
+public class ReaderFile implements IReadable{
     private Scanner scanner;
-    private static ConsoleManager instance;
 
 
-    private ConsoleManager() {
-        //cons = System.console();
-        scanner = new Scanner(System.in);
-    }
-    public static ConsoleManager getInstance(){
-        if (instance == null)
-            instance = new ConsoleManager();
-
-        return instance;
-    }
-    @Override
-    public void write(String s){
-        System.out.print(s);
-    }
-
-    @Override
-    public void writeln(String s) {
-        System.out.println(s);
+    public ReaderFile(String path) throws FileNotFoundException {
+       this.scanner =  new Scanner(new BufferedReader(new FileReader(path)));
     }
 
     @Override
@@ -37,6 +22,7 @@ public class ConsoleManager implements IReadable,IWritable{
     public String readline() {
         return scanner.nextLine();
     }
+
 
     public Float readFloat(){
         if (scanner.hasNextFloat())
