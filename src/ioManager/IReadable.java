@@ -1,9 +1,7 @@
 package ioManager;
 
+import java.io.IOException;
+
 public interface IReadable{
-    String read();
     String readline();
-    Integer readInt();
-    Float readFloat();
-    Long readLong();
 }

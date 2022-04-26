@@ -20,17 +20,21 @@ public class UpdateIdCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         int id = 0;
-        if (args.length>1)
+        if (!arg.isEmpty())
             try{
-                id = Integer.parseInt(args[1]);
+                id = Integer.parseInt(arg);
             }
             catch (Exception ex){
                 env.getOut().writeln("Wrong arg");
                 return;
             }
-        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+        else{
+            System.err.println("Wrong arg");
+            return;
+        }
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), !env.isScript());
         City o = reqEl.readElement();
         env.getCollectionManager().updateById(id,o);
     }

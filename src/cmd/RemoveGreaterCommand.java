@@ -20,8 +20,8 @@ public class RemoveGreaterCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
-        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+    public void execute(Environment env, String arg) {
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), !env.isScript());
         City o = reqEl.readElement();
         env.getCollectionManager().removeGreater(o);
     }

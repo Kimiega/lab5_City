@@ -1,50 +1,33 @@
 package ioManager;
 
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
-import java.io.FileReader;
-import java.io.BufferedReader;
+import java.util.stream.Stream;
 
 public class ReaderFile implements IReadable{
-    private Scanner scanner;
+    private String path;
+    private BufferedReader br;
+    private List<String> lines;
+    private int it;
+    Scanner scanner;
 
-
-    public ReaderFile(String path) throws FileNotFoundException {
-       this.scanner =  new Scanner(new BufferedReader(new FileReader(path)));
-    }
-
-    @Override
-    public String read() {
-        return scanner.next();
+    public ReaderFile(String path) throws IOException {
+        lines = Files.readAllLines(Paths.get(path));
+        it = 0;
     }
 
     @Override
     public String readline() {
-        return scanner.nextLine();
+        if (it==lines.size())
+            return null;
+        return lines.get(it++);
     }
-
-
     public Float readFloat(){
         if (scanner.hasNextFloat())
             return scanner.nextFloat();
-        else
-            scanner.next();
-        return null;
-    }
-
-    @Override
-    public Long readLong() {
-        if (scanner.hasNextLong())
-            return scanner.nextLong();
-        else
-            scanner.next();
-        return null;
-    }
-
-    @Override
-    public Integer readInt() {
-        if (scanner.hasNextInt())
-            return scanner.nextInt();
         else
             scanner.next();
         return null;

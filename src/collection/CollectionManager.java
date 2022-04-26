@@ -1,7 +1,7 @@
 package collection;
 import ioManager.*;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.TreeSet;
 
@@ -34,13 +34,11 @@ public class CollectionManager {
     public void clear(){
         cityCollection.clear();
     }
-    public void executeScript(String path){
-        //TODO
-    }
-    public void info(){
-        out.writeln("Type: "+cityCollection.getClass().toString());
-        out.writeln("Date of initialization: "+initializationDate.toString());
-        out.writeln("Amount of elements: "+cityCollection.size());
+
+    public void info() {
+        out.writeln("Type: " + cityCollection.getClass().toString());
+        out.writeln("Date of initialization: " + initializationDate.toString());
+        out.writeln("Amount of elements: " + cityCollection.size());
     }
     public void printAscending(){
         for (City city : cityCollection) {
@@ -53,33 +51,36 @@ public class CollectionManager {
         }
     }
     public void removeAllByTimezone(int timezone){
-        for (City city : cityCollection) {
-            if (city.getTimezone()==timezone){
-                cityCollection.remove(city);
-            }
-        }
+        cityCollection.removeIf(city -> city.getTimezone()==timezone);
     }
     public void removeById(int id){
-        for (City city : cityCollection) {
-            if (city.getId()==id){cityCollection.remove(city);}
-        }
+        cityCollection.removeIf(city -> city.getId() == id);
     }
     public void removeGreater(City o){
         cityCollection = (TreeSet<City>)cityCollection.headSet(o,true);
     }
     public void save(String path){
-        IOFileManager ioFileManager = new IOFileManager(path);
-        ioFileManager.write(JsonConvertor.toJson(cityCollection));
+        try {
+            IWritable fileWriter = new WriterFile(path);
+            fileWriter.write(JsonConvertor.toJson(cityCollection));
+        } catch (IOException e) {
+            out.writeln("Ошибка сохранения");
+        }
+
     }
     public void show(){
         for (City city : cityCollection) {
-            out.writeln(city.toString());
+                out.writeln(city.toString());
         }
     }
     public void updateById(int id, City o){
+        City.setIdOrder(City.getIdOrder()-1);
         for (City city : cityCollection) {
             if (city.getId()==id){
-                city = o;
+                o.setId(id);
+                cityCollection.remove(city);
+                cityCollection.add(o);
+                break;
             }
         }
     }
@@ -87,7 +88,7 @@ public class CollectionManager {
         IReadable fileReader;
         try {
             fileReader = new ReaderFile(path);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             out.writeln("Файл коллекции не найден или недоступен");
             return;
         }
@@ -95,15 +96,14 @@ public class CollectionManager {
         String sTemp;
         while ((sTemp = fileReader.readline())!=null)
             collectionJson+=sTemp;
-        try {
             cityCollection = JsonConvertor.fromJson(collectionJson);
-        }
-        catch(Exception ex) {
+        if (cityCollection == null){
             out.writeln("Файл поврежден");
             cityCollection = new TreeSet<City>(new CustomComp());
             out.writeln("Cоздана пустая коллекция");
             return;
         }
+        out.writeln("Коллекция была загружена из файла "+path);
         int id=0;
         for (City city : cityCollection) {
             if (city.getId()>id)

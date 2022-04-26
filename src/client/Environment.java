@@ -13,14 +13,16 @@ public class Environment {
     private IReadable in;
     private IWritable out;
     private String path;
-    private boolean isRunning;
-    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap,String path, IReadable in, IWritable out){
+    private boolean running;
+    private final boolean script;
+    public Environment(CollectionManager collectionManager, HashMap<String, ICommand> commandMap,String path, IReadable in, IWritable out,boolean isScript){
         this.collectionManager = collectionManager;
         this.commandMap = commandMap;
         this.path = path;
         this.in = in;
         this.out = out;
-        isRunning = true;
+        this.script = isScript;
+        running = true;
     }
 
     public CollectionManager getCollectionManager() {
@@ -38,13 +40,15 @@ public class Environment {
     public IWritable getOut(){
         return out;
     }
-    public boolean getIsRunning(){
-        return isRunning;
+    public boolean isRunning(){
+        return running;
     }
     public void turnOff(){
-        isRunning = false;
+        running = false;
     }
-
+    public boolean isScript(){
+        return script;
+    }
     public String getPath() {
         return path;
     }

@@ -9,11 +9,7 @@ public class Coordinates implements Serializable {
     private Float y; //Максимальное значение поля: 960, Поле не может быть
 
     public Coordinates(Long x, Float y){
-       // if (x==null){
-            //throw exception about wrong input, same for y TODO
-        //}
         this.x = x;
-
         this.y = y;
     }
 

@@ -30,17 +30,20 @@ public class City implements Comparable<City>, Serializable {
         this.agglomeration = agglomeration;
         this.climate = climate;
         this.governor = governor;
-        //TODO is acceptable
     }
 
     protected static void setIdOrder(int idOrder) {
         City.idOrder = idOrder;
     }
-
+    protected static int getIdOrder(){
+        return idOrder;
+    }
     public int getId() {
         return id;
     }
-
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getTimezone() {
         return timezone;
     }

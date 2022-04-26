@@ -18,7 +18,7 @@ public class PrintDescendingCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         env.getCollectionManager().printDescending();
     }
     public static void register(HashMap<String, ICommand> commandMap) {

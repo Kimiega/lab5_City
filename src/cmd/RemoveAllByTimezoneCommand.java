@@ -18,12 +18,12 @@ public class RemoveAllByTimezoneCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         int timezone = -13;
-        if (args.length>1) {
+        if (!arg.isEmpty()) {
             try {
-                timezone = Integer.parseInt(args[1]);
-            } catch (Exception ex) {
+                timezone = Integer.parseInt(arg);
+            } catch (NumberFormatException ex) {
                 env.getOut().writeln("Wrong arg");
                 return;
             }
@@ -33,8 +33,9 @@ public class RemoveAllByTimezoneCommand implements ICommand {
             }
             env.getCollectionManager().removeAllByTimezone(timezone);
         }
-        else
+        else {
             env.getOut().writeln("Arg is missing");
+        }
     }
     public static void register(HashMap<String, ICommand> commandMap) {
         ICommand cmd = new RemoveAllByTimezoneCommand();

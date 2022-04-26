@@ -18,7 +18,7 @@ public class LoadCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         env.getCollectionManager().load(env.getPath());
     }
     public static void register( HashMap<String, ICommand> commandMap) {

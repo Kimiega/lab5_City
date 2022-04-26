@@ -11,16 +11,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 //TODO StreamAPI ?
-//TODO make execute_script command
 //TODO Unit tests
 //TODO javadoc
-//TODO fix IOFileManager
 //TODO make UML diagram
 
 public class Main{
 
     public static void main(String[] args){
-        String path = "collection2.json";
+        String path = "collection.json";
         //start settings
         //console gui
         //offline online
@@ -55,19 +53,25 @@ public class Main{
         ShowCommand.register(commandMap);
         UpdateIdCommand.register(commandMap);
         LoadCommand.register(commandMap);
-        if (new File(path).isFile()){
-            myCollection.load(path);
+        ExecuteScriptCommand.register(commandMap);
+
+        File file = new File(path);
+        if (file.isFile()){
+            if (file.length()>0) {
+                myCollection.load(path);
+            }
         }
         else{
             try {
-                new File(path).createNewFile();
+                file.createNewFile();
             }
             catch (IOException ex){
+                System.out.println("File can't be created\nFinishing of working program");
                 ex.printStackTrace();
                 System.exit(1);
             }
         }
-        Environment env = new Environment(myCollection,commandMap,path, in, out);
+        Environment env = new Environment(myCollection,commandMap,path, in, out, false);
         Client client = new Client(env);
         client.init();
 

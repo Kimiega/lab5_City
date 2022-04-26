@@ -18,7 +18,7 @@ public class HelpCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         for (ICommand cmd : env.getCommandMap().values()){
             env.getOut().writeln(cmd.getDescription());
         }

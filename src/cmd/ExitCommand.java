@@ -19,7 +19,7 @@ public class ExitCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
+    public void execute(Environment env, String arg) {
         env.getOut().writeln("Finish of working! Thanks for using!");
         env.turnOff();
     }

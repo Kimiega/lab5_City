@@ -1,7 +1,12 @@
 package cmd;
 
+import client.Client;
 import client.Environment;
+import ioManager.EmptyOut;
+import ioManager.IReadable;
+import ioManager.ReaderFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class ExecuteScriptCommand implements ICommand {
@@ -18,15 +23,33 @@ public class ExecuteScriptCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
-        String path = null;
-        if (args.length==1){
-            env.getOut().writeln("Введите путь к файлу");
-            path = env.getIn().read();
+    public void execute(Environment env, String arg) {
+        if (!arg.isEmpty()){
+            IReadable readerFile;
+            try{
+                readerFile = new ReaderFile(arg);
             }
-        while (path==null || path==""){
-            env.getOut().writeln("Путь не может быть пустым");
-            env.getIn().read();
+            catch (IOException ex){
+                System.err.println("Файл скрипта не может быть прочитан");
+                return;
+            }
+           Environment envScript = new Environment(
+                   env.getCollectionManager(),
+                   env.getCommandMap(),
+                   env.getPath(),
+                   readerFile,
+                   new EmptyOut(),
+                   true
+           );
+            Client clientScript = new Client(envScript);
+            try{clientScript.init();}
+            catch(Exception ex){
+                env.getOut().writeln("Ошибка во время выполнения скрипта");
+            }
+            env.getOut().writeln("Чтение скрипта завершено");
+            }
+        else {
+            System.err.println("Аргумент должен содержать путь к файлу");
         }
 
     }

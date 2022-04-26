@@ -2,8 +2,6 @@ package cmd;
 
 import client.Environment;
 import collection.City;
-import collection.CollectionManager;
-import ioManager.IOManager;
 import ioManager.RequestElement;
 
 import java.util.HashMap;
@@ -21,8 +19,8 @@ public class AddIfMaxCommand implements ICommand {
     }
 
     @Override
-    public void execute(Environment env, String[] args) {
-        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), true);
+    public void execute(Environment env, String arg) {
+        RequestElement reqEl = new RequestElement(env.getIn(), env.getOut(), !env.isScript());
         City o = reqEl.readElement();
         env.getCollectionManager().addIfMax(o);
     }

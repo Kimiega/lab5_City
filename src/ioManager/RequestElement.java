@@ -3,7 +3,10 @@ import collection.City;
 import collection.Climate;
 import collection.Coordinates;
 import collection.Human;
+
+import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 
 public class RequestElement {
     private IReadable in;
@@ -24,75 +27,92 @@ public class RequestElement {
         T exec();
     }
     private String readStr(){
-        String text = in.readline();
-        return text;
+        return in.readline();
     }
     private Integer readInt(){
-        return in.readInt();
+        try {
+            return Integer.parseInt(in.readline());
+        }
+        catch (NumberFormatException ex) {
+            return null;
+        }
     }
     private Float readFloat(){
-        return in.readFloat();
+        try {
+            return Float.parseFloat(in.readline());
+        }
+        catch (NumberFormatException ex) {
+            return null;
+        }
     }
     private Long readLong(){
-        return in.readLong();
+        try {
+            return Long.parseLong(in.readline());
+        }
+        catch (NumberFormatException ex) {
+            return null;
+        }
     }
 
     private <T> T readArg(String message, IExpression<T> query){
-        out.write(message);
+        if (interactive)
+            out.write(message);
         return query.exec();
     }
     private <T> T readArgWhile(String message, String hint, ICondition<T> condition, IExpression<T> query){
-        out.writeln(message);
+        if (interactive)
+            out.writeln(message);
         T o =  readArg(">>>",query);
         while (interactive && !condition.check(o)) {
-            out.writeln(hint);
+            if (interactive)
+                out.writeln(hint);
             o = readArg(">>>", query);
         }
         return o;
     }
     private String readName(){
         String name = (String)readArgWhile("Введите название города: ", "Название не может быть пустым",
-                (s) -> !s.isEmpty(), ()->readStr());
+                (s) -> s!=null && !s.isEmpty(), ()->readStr());
         return name;
     }
 
     private Coordinates readCoords(){
         Long x = (Long)readArgWhile("Введите координаты города по Х: ", "Значение должно быть целым числом",
-                (s) -> s != null, ()->readLong());
+                Objects::nonNull, this::readLong);
         Float y = (Float)readArgWhile("Введите координаты города по Y: ", "Значение должно быть действительным числом",
-                (s) -> s != null, ()->readFloat());
+                Objects::nonNull, this::readFloat);
         return new Coordinates(x,y);
     }
 
     private int readArea(){
         int area = (Integer) readArgWhile("Введите зону: ", "Значение поля должно быть больше 0",
-                (s) -> s!=null && s >0, ()->readInt());
+                (s) -> s!=null && s >0, this::readInt);
         return area;
     }
 
     private Long readPopulation(){
         Long population = (Long)readArgWhile("Введите количество населения: ", "Значение должно быть целым числом",
-                (s) -> s != null, ()->readLong());
+                Objects::nonNull, this::readLong);
         return population;
     }
     private Float readMetersAboveSeaLevel(){
         Float metersAboveSeaLevel = (Float)readArgWhile("Введите высоту над уровнем моря: ", "Значение должно быть действительным числом",
-                (s) -> s!=null, ()->readFloat());
+                Objects::nonNull, this::readFloat);
         return metersAboveSeaLevel;
     }
     private int readTimezone(){
         int timezone = (Integer) readArgWhile("Введите часовой пояс: ", "Значение поля должно быть целочисленным, больше -13 и меньше 15",
-                (s) -> s!= null && s>-13 && s <=15, ()->readInt());
+                (s) -> s!= null && s>-13 && s <=15, this::readInt);
         return timezone;
     }
     private Long readAgglomeration(){
         Long agglomeration = (Long)readArgWhile("Введите аггломерацию: ", "Значение должно быть целым числом",
-                (s) -> s != null, ()->readLong());
+                Objects::nonNull, this::readLong);
         return agglomeration;
     }
     private Climate readClimate(){
         String climateStr =(String)readArgWhile("Введите климат: ", "Значение должно быть пустым или одним из: "+ Climate.enumToStr(),
-                (s) -> s.isEmpty() || Climate.isClimate(s), ()->readStr());
+                (s) -> s!=null && (s.isEmpty() || Climate.isClimate(s)), ()->readStr());
         Climate climate;
         if (climateStr.isEmpty())
             climate = null;
@@ -101,14 +121,14 @@ public class RequestElement {
     }
     private Human readGovernor(){
         Human governor;
-        String governorName = (String)readArgWhile("Введите имя мэра: ", "Название не может быть пустым",
-                (s) -> true, ()->readStr());
+        String governorName = (String)readArgWhile("Введите имя мэра: ", "Имя должно состоять из символов",
+                (s) -> s!=null, this::readStr);
         if (governorName.isEmpty())
             governor = null;
         else {
             String dataPattern = "dd-mm-yyyy";
             Date birthday = DateAdapter.adapt((String) readArgWhile("Введите дату его рождения: ", "Дата должна быть в формате: " + dataPattern,
-                    (s) -> DateAdapter.isAdapting(s, dataPattern), () -> readStr()), dataPattern);
+                    (s) -> s!=null && DateAdapter.isAdapting(s, dataPattern), this::readStr), dataPattern);
             governor = new Human(governorName,birthday);
         }
         return governor;
